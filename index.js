@@ -43,10 +43,18 @@ let questionNumber = 0;
 
 function startQuiz() {
 //Begins the quiz after user clicks the 'Start Quiz' button
+    $('main').html(`
+        <h1>Can you name all the Marvel Superheroes?</h1>
+        <div class="startQuiz">
+            <button class="startButton" type="button">Start Quiz</button>
+        </div>`);
     $('.startButton').click(function(event) {
-        $('.quizForm').css('display', 'block');
-        $('questionNumber').text(1);
-    })
+        renderQuestions();
+    });
+}
+
+function renderQuestions() {
+    $('main').html(generateQuestion());
 }
 
 function generateQuestion() {
@@ -58,20 +66,20 @@ function generateQuestion() {
         <form>
             <fieldset>
                 <label class="answerChoices">
-                <input value="${STORE[questionNumber].answers[0]}" required>
-                <span>${STORE[questionNumber].answer[0]}</span>
+                <input type="radio" value="${STORE[questionNumber].answers[0]}" required>
+                <span>${STORE[questionNumber].answers[0]}</span>
                 </label>
                 <label class="answerChoices">
-                <input value="${STORE[questionNumber].answers[1]}" required>
-                <span>${STORE[questionNumber].answer[1]}</span>
+                <input type="radio" value="${STORE[questionNumber].answers[1]}" required>
+                <span>${STORE[questionNumber].answers[1]}</span>
                 </label>
                 <label class="answerChoices">
-                <input value="${STORE[questionNumber].answers[2]}" required>
-                <span>${STORE[questionNumber].answer[2]}</span>
+                <input type="radio" value="${STORE[questionNumber].answers[2]}" required>
+                <span>${STORE[questionNumber].answers[2]}</span>
                 </label>
                 <label class="answerChoices">
-                <input value="${STORE[questionNumber].answers[3]}" required>
-                <span>${STORE[questionNumber].answer[3]}</span>
+                <input type="radio" value="${STORE[questionNumber].answers[3]}" required>
+                <span>${STORE[questionNumber].answers[3]}</span>
                 </label>
             </fieldset>
         </form>
@@ -147,9 +155,6 @@ function restartQuiz() {
 
 function runQuiz() {
     startQuiz();
-    generateQuestion();
-    selectAnswer();
-    restartQuiz();
 }
 
 $(runQuiz);
