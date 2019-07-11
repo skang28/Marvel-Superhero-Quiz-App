@@ -24,7 +24,7 @@ const STORE = [
     },
     {
         question: 'In the Xmen series, who created and ran the school for mutants?',
-        answer: ['Wolverine', 'Superman', 'Professor Charles Xavier', 'Tony Stark'],
+        answers: ['Wolverine', 'Superman', 'Professor Charles Xavier', 'Tony Stark'],
         correctAnswer: 'Professor Charles Xavier',
         picture: 'https://vignette.wikia.nocookie.net/xmenevo/images/a/ad/Charles_Xavier_-_Comics.png/revision/latest?cb=20151129003140',
         alt: 'Professor X pic'
@@ -41,7 +41,7 @@ const STORE = [
 let score = 0;
 let questionNumber = 0;
 
-function startQuiz() {
+function renderLandingPage() {
 //Begins the quiz after user clicks the 'Start Quiz' button
     $('main').html(`
         <h1>Can you name all the Marvel Superheroes?</h1>
@@ -50,6 +50,7 @@ function startQuiz() {
         </div>`);
     $('.startButton').click(function(event) {
         renderQuestions();
+        $('.questionNumber').text(1);
     });
 }
 
@@ -66,21 +67,22 @@ function generateQuestion() {
         <form>
             <fieldset>
                 <label class="answerChoices">
-                <input type="radio" value="${STORE[questionNumber].answers[0]}" required>
+                <input name="inputAnswer" type="radio" value="${STORE[questionNumber].answers[0]}" required>
                 <span>${STORE[questionNumber].answers[0]}</span>
                 </label>
                 <label class="answerChoices">
-                <input type="radio" value="${STORE[questionNumber].answers[1]}" required>
+                <input name="inputAnswer" type="radio" value="${STORE[questionNumber].answers[1]}" required>
                 <span>${STORE[questionNumber].answers[1]}</span>
                 </label>
                 <label class="answerChoices">
-                <input type="radio" value="${STORE[questionNumber].answers[2]}" required>
+                <input name="inputAnswer" type="radio" value="${STORE[questionNumber].answers[2]}" required>
                 <span>${STORE[questionNumber].answers[2]}</span>
                 </label>
                 <label class="answerChoices">
-                <input type="radio" value="${STORE[questionNumber].answers[3]}" required>
+                <input name="inputAnswer" type="radio" value="${STORE[questionNumber].answers[3]}" required>
                 <span>${STORE[questionNumber].answers[3]}</span>
                 </label>
+                <input type="submit" value="Submit">
             </fieldset>
         </form>
         </div>`
@@ -108,10 +110,9 @@ function selectAnswer() {
 //Checks if the user selected wrong/correct answer and displays answer screen after submitting answer
     $('form').submit(function(event) {
         event.preventDefault();
-        let selection = $('input:checked');
-        let answer = selection.val();
-        let correctAnswer = `${STORE[questionNumber].answer}`;
-        if (answer === correctAnswer) {
+        let selection = $('input[name="inputAnswer"]:checked').val();
+        let checkAnswer = STORE[questionNumber].correctAnswer;
+        if (selection === checkAnswer) {
             rightAnswer();
         }
         else {
@@ -122,27 +123,39 @@ function selectAnswer() {
 
 function wrongAnswer() {
 //Displays the wrong answer screen then gives option for next question
-    let correctAnswer = `${STORE[questionNumber].answer}`;
-    $('.quizForm').html(`
+    let checkAnswer = STORE[questionNumber].correctAnswer;
+    $('main').html(`
         <div class="wrongAnswerResponse">
-            <p>Incorrect!<br>The correct answer is <span>${correctAnswer}</span></p>
+            <p>Incorrect!<br>The correct answer is <span>${checkAnswer}</span></p>
             <button type=button class="nextQuestionButton">Next Question</button>
         </div>`);
+    
+    $('.nextQuestionButton').click(function(event) {
+        changeQuestionNumber();
+        renderQuestions();
+    });
 }
 
 function rightAnswer() {
 //Displays right answer screen with picture of superhero and button for next question
-    let correctAnswer = `${STORE[questionNumber].answer}`;
-    $('.quizForm').html(`
+    let checkAnswer = `${STORE[questionNumber].correctAnswer}`;
+    $('main').html(`
         <div class="rightAnswerResponse">
             <p>Correct!</p>
             <img src="${STORE[questionNumber].picture}" alt="${STORE[questionNumber].alt}">
+            <button type=button class="nextQuestionButton">Next Question</button>
         </div>`);
+   $('.nextQuestionButton').click(function(event) {
+       changeQuestionNumber();
+       changeScore();
+       renderQuestions();
+   });
+
 }
 
 function finalResults() {
 //After quiz is over, displays info on how many right/wrong, percentage grade, and some message
-    $('.quizForm').html(`
+    $('main').html(`
         <div class="results">
             <p>Congratulations! You've completed the quiz!</p>
             <br><p>You got ${score} / 5 correct!
@@ -151,10 +164,9 @@ function finalResults() {
 
 function restartQuiz() {
 //After user has finished quiz, allows the user to restart the quiz from the beginning
+    $('.restartButton').click(function(event) {
+        renderLandingPage();
+    });
 }
 
-function runQuiz() {
-    startQuiz();
-}
-
-$(runQuiz);
+$(renderLandingPage);
