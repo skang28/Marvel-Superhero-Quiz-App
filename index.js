@@ -82,7 +82,7 @@ function generateQuestion() {
                 <input name="inputAnswer" type="radio" value="${STORE[questionNumber].answers[3]}" required>
                 <span>${STORE[questionNumber].answers[3]}</span>
                 </label>
-                <input type="submit" value="Submit">
+                <button type="submit" id="submitButton">Submit</button>
             </fieldset>
         </form>
         </div>`
