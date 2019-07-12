@@ -43,6 +43,10 @@ let questionNumber = 0;
 
 function renderLandingPage() {
 //Begins the quiz after user clicks the 'Start Quiz' button
+    score = 0;
+    questionNumber = 0;
+    $('.questionNumber').text(0);
+    $('.score').text(0);
     $('main').html(`
         <h1>Can you name all the Marvel Superheroes?</h1>
         <div class="startQuiz">
@@ -56,6 +60,7 @@ function renderLandingPage() {
 
 function renderQuestions() {
     $('main').html(generateQuestion());
+    selectAnswer();
 }
 
 function generateQuestion() {
@@ -126,7 +131,7 @@ function wrongAnswer() {
     let checkAnswer = STORE[questionNumber].correctAnswer;
     $('main').html(`
         <div class="wrongAnswerResponse">
-            <p>Incorrect!<br>The correct answer is <span>${checkAnswer}</span></p>
+            <p>Incorrect!<br>The correct answer is <span class="boldAnswer">${checkAnswer}</span></p>
             <button type=button class="nextQuestionButton">Next Question</button>
         </div>`);
     
@@ -142,7 +147,9 @@ function rightAnswer() {
     $('main').html(`
         <div class="rightAnswerResponse">
             <p>Correct!</p>
-            <img src="${STORE[questionNumber].picture}" alt="${STORE[questionNumber].alt}">
+            <img src="${STORE[questionNumber].picture}" alt="${STORE[questionNumber].alt}" width="500" height="500">
+        </div>
+        <div class="rightAnswerButton">
             <button type=button class="nextQuestionButton">Next Question</button>
         </div>`);
    $('.nextQuestionButton').click(function(event) {
@@ -159,7 +166,9 @@ function finalResults() {
         <div class="results">
             <p>Congratulations! You've completed the quiz!</p>
             <br><p>You got ${score} / 5 correct!
-            <button class="restartButton">Restart Quiz</button>`)
+        <div class="restartQuiz">
+            <button class="restartButton">Restart Quiz</button>
+        </div>`);
 }
 
 function restartQuiz() {

@@ -47,7 +47,6 @@ button {
     padding: 15px;
     background-color: #ee8129;
     border-radius: 10px;
-    width: 25%;
     font-size: 25px;
     font-weight: bold;
 }
@@ -66,6 +65,7 @@ form {
     margin-left: auto;
     margin-right: auto;
     padding: 50px;
+    text-align: center;
 }
 
 fieldset {
@@ -73,16 +73,17 @@ fieldset {
 }
 
 input {
-    display:flex;
-    flex-direction: column;
+    display:inline-block;
     margin-bottom: 25px;
 }
 
 label {
-    display:flex;
+    display: block;
     border: none;
     margin-bottom: 25px;
     font-size: 20px;
+    background-color: orange;
+    text-align: left;
 }
 
 #submitButton {
@@ -91,5 +92,60 @@ label {
     cursor: pointer;
     background-color: orange;
     color: black;
-    width: 100%;
+}
+
+.rightAnswerResponse {
+    text-align: center;
+    font-size: 30px;
+}
+
+.rightAnswerButton {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.wrongAnswerResponse {
+    text-align: center;
+    font-size: 30px;
+}
+
+.wrongAnswerResponse p {
+    margin-bottom: 30px;
+}
+
+.boldAnswer {
+    font-weight: bold;
+}
+
+.results {
+    font-size: 30px;
+    text-align: center;
+}
+
+.restartQuiz {
+    margin-top: 30px;
+}
+
+@media only screen and (max-width: 400px) {
+    header li {
+        list-style: none;
+        display: block;
+        font-size: 30px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    label {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    form {
+        width: 75%;
+    }
+
+    .rightAnswerResponse img {
+        width: 250px;
+        height: 250px;
+    }
 }
